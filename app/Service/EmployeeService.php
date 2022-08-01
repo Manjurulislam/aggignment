@@ -16,9 +16,7 @@ class EmployeeService
         $row      = $request->get('page', 1);
         $cacheKey = "page_{$row}_" . $year . $month;
 
-        //dd(Cache::has('page_1_2008'));
-
-        $items = Cache::remember($cacheKey, 60, function () use ($year, $month) {
+        return Cache::remember($cacheKey, 60, function () use ($year, $month) {
             $query = Employee::query();
 
             if (!blank($year)) {
@@ -30,8 +28,6 @@ class EmployeeService
             }
             return $query->orderBy('id', 'desc')->paginate(20);
         });
-
-        return $items;
     }
 
 
