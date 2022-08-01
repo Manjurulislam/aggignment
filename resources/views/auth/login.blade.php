@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form role="form" class="text-start" method="post" action="{{route('login')}}">
+                            <form role="form" class="text-start" method="post" action="{{route('login.post')}}">
                                 @csrf
                                 <div class="input-group input-group-outline my-3">
                                     <label class="form-label">Email</label>

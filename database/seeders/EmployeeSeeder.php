@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\LazyCollection;
+
+
 
 class EmployeeSeeder extends Seeder
 {
@@ -15,22 +19,28 @@ class EmployeeSeeder extends Seeder
     public function run()
     {
         Employee::truncate();
-        $csvData  = fopen(storage_path('data/test-data.csv'), 'r');
-        $transRow = true;
 
-        while (($data = fgetcsv($csvData,0, ',')) !== false) {
-            if (!$transRow) {
-                Employee::create([
-                    'name'    => $data['1'],
-                    'email'   => $data['2'],
-                    'phone'   => $data['3'],
-                    'dob'     => $data['4'],
-                    'country' => $data['5'],
-                    'ip'      => $data['6'],
-                ]);
+        LazyCollection::make(function () {
+            $csvFile = storage_path('data/test-data.csv');
+            $handle  = fopen($csvFile, 'r');
+
+            while (($line = fgetcsv($handle, 4096, ',')) !== false) {
+                yield $line;
             }
-            $transRow = false;
-        }
-        fclose($csvData);
+            fclose($handle);
+        })->skip(1)->chunk(500)->each(function (LazyCollection $chunk) {
+            $records = $chunk->map(function ($row) {
+                return [
+                    "name"    => $row[1],
+                    "email"   => $row[2],
+                    "phone"   => $row[3],
+                    "dob"     => $row[4],
+                    "country" => $row[5],
+                    "ip"      => $row[6],
+                ];
+            })->toArray();
+            DB::table('employees')->insert($records);
+        });
     }
+
 }

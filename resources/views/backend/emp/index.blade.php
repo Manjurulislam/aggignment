@@ -8,6 +8,38 @@
                         <h6 class="text-white text-capitalize ps-3">Employee</h6>
                     </div>
                 </div>
+                <div class="card-header p-3 border-1">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-outline is-valid my-3">
+                                    <label class="form-label">Success</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-outline is-invalid my-3">
+                                    <label class="form-label">Error</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center justify-content-center mb-0">
