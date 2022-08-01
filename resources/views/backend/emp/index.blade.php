@@ -9,32 +9,39 @@
                     </div>
                 </div>
                 <div class="card-header p-3 border-1">
-                    <form>
+                    <form action="{{route('backend.dashboard')}}">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control">
+                                    <select class="form-control" name="year" id="exampleFormControlSelect1">
+                                        <option value="">Year</option>
+                                        @for ($year = date('Y'); $year > date('Y') - 100; $year--)
+                                            <option
+                                                value="{{ $year }}" {{ (request()->get('year') == $year ? "selected":"") }}>
+                                                {{ $year }}
+                                            </option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" disabled>
+                                    <select class="form-control" name="month" id="exampleFormControlSelect1">
+                                        <option value="">Month</option>
+                                        @foreach(range(1,12) as $month)
+                                            <option
+                                                value="{{$month}}" {{ (request()->get('month') == $month ? "selected":"") }}>
+                                                {{date("M", strtotime('2016-'.$month))}}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-group input-group-outline is-valid my-3">
-                                    <label class="form-label">Success</label>
-                                    <input type="email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group input-group-outline is-invalid my-3">
-                                    <label class="form-label">Error</label>
-                                    <input type="email" class="form-control">
+                            <div class="col-md-2">
+                                <div class="input-group input-group-outline my-3">
+                                    <button class="btn btn-icon btn-2 btn-primary" type="submit">
+                                        <span class="btn-inner--icon"><i class="material-icons">search</i></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -45,16 +52,31 @@
                         <table class="table align-items-center justify-content-center mb-0">
                             <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sl</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Birthday</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Country</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">IP Address</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Sl
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Name
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Email
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Phone
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Birthday
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Country
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">IP
+                                    Address
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
+
                             @if(!blank($items))
                                 @foreach($items as $key => $item)
                                     <tr>
@@ -88,7 +110,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center mb-3">
-                        {{$items->links()}}
+                        {{$items->withQueryString()->links()}}
                     </div>
                 </div>
             </div>
