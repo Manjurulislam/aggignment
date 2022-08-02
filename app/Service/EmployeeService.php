@@ -24,7 +24,7 @@ class EmployeeService
             }
 
             if (!blank($month)) {
-                $query->whereYear('dob', $month);
+                $query->whereMonth('dob', $month);
             }
             return $query->orderBy('id', 'desc')->paginate(20);
         });
